@@ -1,0 +1,151 @@
+@import "tailwindcss";
+@import "@fontsource/instrument-serif/latin-400.css";
+@import "@fontsource/instrument-serif/latin-400-italic.css";
+@import "@fontsource-variable/ibm-plex-sans/wght.css";
+@import "@fontsource/ibm-plex-mono/latin-400.css";
+@import "@fontsource/ibm-plex-mono/latin-500.css";
+
+/*
+ * Design tokens. One layered dark ground, one ink, one accent. Contrast is
+ * verified in docs/DESIGN-REVIEW.md (all text pairs are WCAG AA or better).
+ */
+@theme {
+  --font-display: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-sans: "IBM Plex Sans Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+
+  --color-paper: #0d0d0c;
+  --color-paper-2: #151513;
+  --color-surface: #1c1a17;
+  --color-ink: #f1ece3;
+  --color-ink-2: #a9a39a;
+  --color-ink-3: #8c8880;
+  --color-rule: #2a2722;
+  --color-accent: #d65a2a;
+  --color-accent-ink: #e4784a;
+  --color-demo-bg: #3a2a12;
+  --color-demo-ink: #f0c878;
+}
+
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    scroll-padding-top: 4.75rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-paper);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent-ink);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+}
+
+@layer components {
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.2;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.25;
+    padding: 0.28rem 0.55rem;
+    border: 1px solid var(--color-rule);
+    color: var(--color-ink-2);
+    background: transparent;
+    overflow-wrap: anywhere;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.55rem 1.15rem;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    border: 1px solid var(--color-ink);
+    background: var(--color-ink);
+    color: var(--color-paper);
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .btn:hover { background: var(--color-accent-ink); border-color: var(--color-accent-ink); }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn:disabled:hover { background: var(--color-ink); border-color: var(--color-ink); }
+  .btn-quiet { background: transparent; color: var(--color-ink); }
+  .btn-quiet:hover { background: var(--color-ink); color: var(--color-paper); border-color: var(--color-ink); }
+
+  .link {
+    color: var(--color-accent-ink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+  .link:hover { text-decoration-thickness: 2px; }
+}
+
+/* Motion is opt-in: everything below is inert under prefers-reduced-motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .js .reveal.is-visible { opacity: 1; transform: none; }
+  .js .reveal-stagger {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: calc(var(--i, 0) * 70ms);
+  }
+  .js .reveal-stagger.is-visible { opacity: 1; transform: none; }
+  .js .reveal-clip {
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .js .reveal-clip.is-visible { clip-path: inset(0 0 0 0); }
+  .js .scale-in {
+    opacity: 0;
+    transform: scale(0.94);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .js .scale-in.is-visible { opacity: 1; transform: none; }
+  .hero-in { animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i, 0) * 90ms); }
+  .panel-in { animation: fade-in 0.4s ease both; }
+  .typing-dot { animation: blink 1.2s infinite ease-in-out both; }
+  .typing-dot:nth-child(2) { animation-delay: 0.15s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes blink { 0%, 80%, 100% { opacity: 0.25; } 40% { opacity: 1; } }
+}

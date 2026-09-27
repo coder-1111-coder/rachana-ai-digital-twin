@@ -1,0 +1,971 @@
+{
+  "sourceDoc": "docs/PORTFOLIO-SOURCE-OF-TRUTH.md",
+  "owner": {
+    "name": "Rachana S",
+    "status": "Year 3 Digital Transformation / AI-ML student",
+    "headline": "I build machine-learning pipelines and full-stack applications.",
+    "lede": "Six projects, described only with what my verified notes list, plus an AI twin that says so when something isn't in them."
+  },
+  "about": {
+    "paragraphs": [
+      "I'm a third-year student in Digital Transformation, focused on AI and machine learning. The six projects on this page are described using only what is in my verified notes.",
+      "The asteroid project uses leakage-safe grouped train/test separation and applies SMOTE to training data only. The face recognition project includes a confidence threshold. The full-stack projects include authentication, validation, rate limiting, a genomic dashboard and AI summaries."
+    ],
+    "notPublished": "Employers, dates, grades and performance numbers are not in my verified notes, so they are not published here and the twin will not guess them."
+  },
+  "site": {
+    "stack": [
+      "React",
+      "TypeScript",
+      "Vite",
+      "Tailwind CSS",
+      "Lucide React",
+      "Node.js",
+      "Express",
+      "Groq"
+    ],
+    "repoUrl": null
+  },
+  "projects": [
+    {
+      "id": "face-recognition",
+      "number": "01",
+      "title": "PCA + ANN Face Recognition System",
+      "shortTitle": "Face Recognition",
+      "repoUrl": null,
+      "driveUrl": "https://drive.google.com/drive/folders/1QdUDRg0ahajt_9Tomr2ttUf3i_QSxEhL?usp=drive_link",
+      "kind": "ml",
+      "kindLabel": "Machine learning",
+      "aliases": [
+        "face recognition",
+        "eigenface",
+        "pca + ann",
+        "pca and ann"
+      ],
+      "summary": "Face recognition for nine people from 450 face images: PCA eigenfaces as features and an ANN classifier.",
+      "stack": [
+        "Python",
+        "OpenCV",
+        "NumPy",
+        "TensorFlow/Keras",
+        "Scikit-learn",
+        "Matplotlib",
+        "Seaborn"
+      ],
+      "study": {
+        "problem": "Classify which of nine people appears in a face image, using PCA features (eigenfaces) fed into an ANN.",
+        "dataset": [
+          {
+            "label": "Images",
+            "value": "450 facial images"
+          },
+          {
+            "label": "People",
+            "value": "9"
+          },
+          {
+            "label": "Per person",
+            "value": "50 images"
+          },
+          {
+            "label": "Split",
+            "value": "60/40 stratified"
+          }
+        ],
+        "pipelineOrdered": true,
+        "pipelineHighlights": [
+          6,
+          10
+        ],
+        "pipeline": [
+          "Image loading",
+          "Grayscale",
+          "Resize to 100x100",
+          "Flatten",
+          "Mean face",
+          "Mean subtraction",
+          "Surrogate covariance",
+          "Eigen decomposition",
+          "Eigenfaces",
+          "PCA signatures",
+          "60/40 stratified split",
+          "ANN",
+          "Evaluation"
+        ],
+        "network": [
+          {
+            "type": "input",
+            "label": "PCA signature"
+          },
+          {
+            "type": "dense",
+            "units": 128,
+            "activation": "ReLU"
+          },
+          {
+            "type": "dropout",
+            "rate": 0.3
+          },
+          {
+            "type": "dense",
+            "units": 64,
+            "activation": "ReLU"
+          },
+          {
+            "type": "dropout",
+            "rate": 0.2
+          },
+          {
+            "type": "dense",
+            "units": 9,
+            "activation": "Softmax"
+          }
+        ],
+        "models": [
+          "ANN: 128 ReLU → Dropout 0.3 → 64 ReLU → Dropout 0.2 → 9 Softmax"
+        ],
+        "evaluation": [
+          "Confusion matrix",
+          "Classification metrics",
+          "Accuracy vs k"
+        ],
+        "outputs": [
+          "Imposter detection",
+          "Confidence threshold",
+          "Saved ANN model",
+          "PCA / eigenface visualizations"
+        ],
+        "decisions": [
+          "Images are grayscale, resized to 100x100 and flattened before PCA.",
+          "The split is 60/40 and stratified.",
+          "Dropout follows each hidden layer (0.3 then 0.2).",
+          "The system includes imposter detection and a confidence threshold."
+        ],
+        "pipelineLabel": "Pipeline"
+      }
+    },
+    {
+      "id": "asteroid",
+      "number": "02",
+      "title": "Hazardous Asteroid Prediction",
+      "shortTitle": "Hazardous Asteroids",
+      "repoUrl": null,
+      "driveUrl": "https://drive.google.com/drive/folders/1uvXxiPpQYEyoGz2fQsUdSBc8Gr40z_0J?usp=drive_link",
+      "kind": "ml",
+      "kindLabel": "Machine learning",
+      "aliases": [
+        "hazardous asteroid",
+        "asteroid prediction",
+        "asteroid project"
+      ],
+      "summary": "Binary classifier for hazardous vs non-hazardous near-Earth objects in NASA NEO observations, with leakage-safe grouped train/test separation and SMOTE on training data only.",
+      "stack": [
+        "SMOTE",
+        "Gradient Boosting",
+        "RandomizedSearchCV",
+        "Joblib"
+      ],
+      "study": {
+        "problem": "Classify near-Earth objects as Hazardous or Non-Hazardous from NASA NEO historical observations.",
+        "dataset": [
+          {
+            "label": "Source",
+            "value": "NASA NEO historical observations"
+          },
+          {
+            "label": "Records",
+            "value": "approximately 90,836 close-approach records"
+          },
+          {
+            "label": "Unique asteroids",
+            "value": "approximately 27,423 asteroid IDs"
+          },
+          {
+            "label": "Hazardous class",
+            "value": "approximately 9.7%"
+          },
+          {
+            "label": "Note",
+            "value": "asteroid IDs repeat across records"
+          }
+        ],
+        "classBalance": {
+          "label": "Hazardous",
+          "percent": 9.7,
+          "approximate": true
+        },
+        "pipelineOrdered": false,
+        "pipelineHighlights": [
+          4,
+          5
+        ],
+        "pipeline": [
+          "Missing-value analysis",
+          "Duplicate analysis",
+          "Zero-variance feature removal",
+          "Feature engineering (average estimated diameter)",
+          "Leakage-safe grouped train/test separation",
+          "SMOTE on training data only",
+          "9 classification algorithms",
+          "Accuracy, precision, recall, F1, ROC-AUC",
+          "Gradient Boosting optimization",
+          "RandomizedSearchCV",
+          "Feature importance",
+          "Permutation importance",
+          "Joblib",
+          "Prediction interface"
+        ],
+        "models": [
+          "9 classification algorithms (their names are not listed in my verified notes)",
+          "Gradient Boosting optimization",
+          "RandomizedSearchCV"
+        ],
+        "evaluation": [
+          "Accuracy",
+          "Precision",
+          "Recall",
+          "F1",
+          "ROC-AUC",
+          "Feature importance",
+          "Permutation importance"
+        ],
+        "outputs": [
+          "Joblib",
+          "Prediction interface"
+        ],
+        "decisions": [
+          "Train/test separation is grouped and leakage-safe. Asteroid IDs repeat across records.",
+          "SMOTE is applied to the training data only.",
+          "Zero-variance features are removed, and average estimated diameter is an engineered feature.",
+          "The workflow includes Gradient Boosting optimization, RandomizedSearchCV, feature importance and permutation importance."
+        ],
+        "resultsNote": "No performance numbers are published for this project.",
+        "pipelineLabel": "Workflow"
+      }
+    },
+    {
+      "id": "attrition",
+      "number": "03",
+      "title": "Employee Attrition + Salary Prediction",
+      "shortTitle": "Attrition + Salary",
+      "repoUrl": "https://github.com/rachana26paw/hr-attrition-ml-analysis",
+      "driveUrl": null,
+      "kind": "ml",
+      "kindLabel": "Machine learning",
+      "aliases": [
+        "employee attrition",
+        "salary prediction",
+        "attrition + salary",
+        "ibm hr"
+      ],
+      "summary": "One HR dataset, two tasks: attrition classification and MonthlyIncome regression, using multiple classification and multiple regression algorithms.",
+      "stack": [
+        "SMOTE",
+        "GridSearchCV",
+        "Log transformation"
+      ],
+      "study": {
+        "problem": "Attrition classification and MonthlyIncome regression on the IBM HR Attrition dataset.",
+        "dataset": [
+          {
+            "label": "Dataset",
+            "value": "IBM HR Attrition"
+          },
+          {
+            "label": "Task 1",
+            "value": "Attrition classification"
+          },
+          {
+            "label": "Task 2",
+            "value": "MonthlyIncome regression"
+          }
+        ],
+        "pipelineOrdered": false,
+        "pipeline": [
+          "Preprocessing",
+          "Encoding",
+          "Scaling",
+          "Train/test split",
+          "SMOTE",
+          "Feature engineering",
+          "GridSearchCV",
+          "Log transformation"
+        ],
+        "models": [
+          "Multiple classification algorithms (not named in the verified source)",
+          "Multiple regression algorithms (not named in the verified source)"
+        ],
+        "evaluation": [
+          "Classification: F1, AUC",
+          "Regression: RMSE, R²"
+        ],
+        "outputs": [],
+        "decisions": [
+          "One dataset serves two tasks: attrition classification and MonthlyIncome regression.",
+          "The methods include preprocessing, encoding, scaling, SMOTE and feature engineering.",
+          "GridSearchCV is used for hyperparameter search.",
+          "A log transformation is among the methods."
+        ],
+        "pipelineLabel": "Methods"
+      }
+    },
+    {
+      "id": "symbio-nlm",
+      "number": "04",
+      "title": "Symbio-NLM",
+      "shortTitle": "Symbio-NLM",
+      "repoUrl": "https://github.com/anurag-njr11/Symbio-project",
+      "driveUrl": null,
+      "kind": "fullstack",
+      "kindLabel": "Full-stack",
+      "aliases": [
+        "symbio-nlm",
+        "symbio nlm",
+        "symbio"
+      ],
+      "summary": "Full-stack genomics platform: FASTA upload and validation, DNA parsing, GC content, nucleotide counts and ORF detection, with a genomic dashboard, AI sequence summaries, an AI chatbot, OAuth sign-in and PDF reports.",
+      "stack": [
+        "React",
+        "Node.js",
+        "Express",
+        "MongoDB/Mongoose",
+        "GSAP",
+        "Recharts",
+        "Tailwind",
+        "Passport/OAuth",
+        "PDF generation"
+      ],
+      "study": {
+        "problem": "Full-stack genomics platform for FASTA files: upload, validation, DNA parsing, GC content, nucleotide counts and ORF detection, with a genomic dashboard.",
+        "layers": {
+          "frontend": {
+            "stack": [
+              "React",
+              "Tailwind",
+              "Recharts",
+              "GSAP"
+            ],
+            "notes": [
+              "Genomic dashboard"
+            ]
+          },
+          "backend": {
+            "stack": [
+              "Node.js",
+              "Express",
+              "Passport"
+            ],
+            "notes": []
+          },
+          "database": {
+            "stack": [
+              "MongoDB",
+              "Mongoose"
+            ],
+            "notes": []
+          },
+          "ai": {
+            "stack": [],
+            "notes": [
+              "AI sequence summaries",
+              "AI chatbot"
+            ]
+          },
+          "auth": {
+            "stack": [
+              "Passport/OAuth"
+            ],
+            "notes": [
+              "Authentication",
+              "Google, Microsoft and GitHub OAuth"
+            ]
+          }
+        },
+        "featureGroups": [
+          {
+            "label": "Sequence analysis",
+            "items": [
+              "FASTA upload",
+              "FASTA validation",
+              "DNA parsing",
+              "GC content",
+              "Nucleotide counts",
+              "ORF detection"
+            ]
+          },
+          {
+            "label": "Output",
+            "items": [
+              "Genomic dashboard",
+              "PDF reports"
+            ]
+          }
+        ],
+        "notSpecified": [
+          "Which tier (client or server) runs each analysis step",
+          "What is stored in MongoDB",
+          "Which AI provider or model powers the summaries and chatbot"
+        ]
+      }
+    },
+    {
+      "id": "space-atlas",
+      "number": "05",
+      "title": "Space Atlas",
+      "shortTitle": "Space Atlas",
+      "repoUrl": "https://github.com/coder-1111-coder/Space-Atlas-backend-codes",
+      "driveUrl": null,
+      "kind": "fullstack",
+      "kindLabel": "Full-stack",
+      "aliases": [
+        "space atlas"
+      ],
+      "summary": "Full-stack astronomy application: 30+ celestial bodies with search, filtering and detail pages, JWT authentication, an admin panel with CRUD, validation, rate limiting, Helmet, Mongo sanitization and CORS.",
+      "stack": [
+        "React",
+        "React Router",
+        "Vite",
+        "Axios",
+        "Node.js",
+        "Express",
+        "MongoDB/Mongoose",
+        "JWT"
+      ],
+      "study": {
+        "problem": "Full-stack astronomy application with 30+ celestial bodies, NASA imagery and an admin panel.",
+        "layers": {
+          "frontend": {
+            "stack": [
+              "React",
+              "React Router",
+              "Vite",
+              "Axios"
+            ],
+            "notes": [
+              "Detail pages",
+              "Responsive UI"
+            ]
+          },
+          "backend": {
+            "stack": [
+              "Node.js",
+              "Express"
+            ],
+            "notes": [
+              "Rate limiting",
+              "Helmet",
+              "Mongo sanitization",
+              "CORS"
+            ]
+          },
+          "database": {
+            "stack": [
+              "MongoDB",
+              "Mongoose"
+            ],
+            "notes": []
+          },
+          "ai": {
+            "stack": [],
+            "notes": []
+          },
+          "auth": {
+            "stack": [
+              "JWT"
+            ],
+            "notes": [
+              "JWT authentication"
+            ]
+          }
+        },
+        "featureGroups": [
+          {
+            "label": "Browsing",
+            "items": [
+              "30+ celestial bodies",
+              "Search",
+              "Filtering",
+              "Detail pages",
+              "Responsive UI",
+              "NASA imagery"
+            ]
+          },
+          {
+            "label": "Administration",
+            "items": [
+              "Admin panel",
+              "CRUD"
+            ]
+          },
+          {
+            "label": "Hardening",
+            "items": [
+              "JWT authentication",
+              "Validation",
+              "Rate limiting",
+              "Helmet",
+              "Mongo sanitization",
+              "CORS"
+            ]
+          }
+        ],
+        "notSpecified": [
+          "What is stored in MongoDB",
+          "Which tier runs search, filtering and validation",
+          "Any AI feature: none is listed in the verified source"
+        ]
+      }
+    },
+    {
+      "id": "memory-of-a-city",
+      "number": "06",
+      "title": "Memory of a City",
+      "shortTitle": "Memory of a City",
+      "repoUrl": "https://github.com/Meghna-K03/Memory-of--a-city.git",
+      "driveUrl": null,
+      "kind": "interactive",
+      "kindLabel": "Interactive + AI",
+      "aliases": [
+        "memory of a city"
+      ],
+      "summary": "Interactive explorer of Bengaluru's urban evolution: year, neighbourhood, compare years, metrics and charts, then an AI Change Story. Historical metrics are demo data.",
+      "stack": [],
+      "study": {
+        "problem": "An interactive explorer of Bengaluru's urban evolution across years and neighbourhoods. The historical metrics are demo data.",
+        "flow": [
+          "Home",
+          "City Explorer",
+          "Year",
+          "Neighborhood",
+          "Compare years",
+          "Metrics / charts",
+          "AI Change Story",
+          "Evidence"
+        ],
+        "dataNotice": "Historical metrics are DEMO DATA, not verified real-world measurements.",
+        "geography": "Current geography uses OpenStreetMap.",
+        "story": [
+          {
+            "label": "Data Observation"
+          },
+          {
+            "label": "AI Interpretation"
+          },
+          {
+            "label": "Supporting Evidence"
+          }
+        ],
+        "notSpecified": [
+          "The technology stack",
+          "Which AI provider or model writes the Change Story"
+        ]
+      }
+    }
+  ],
+  "learning": {
+    "note": "Ordered by theme, not by date. The verified notes contain no dates or employment history, so none are shown.",
+    "tracks": [
+      {
+        "id": "a",
+        "label": "Machine learning",
+        "title": "PCA and eigenfaces",
+        "text": "PCA and eigenfaces (mean face, mean subtraction, surrogate covariance, eigen decomposition), followed in the pipeline by an ANN classifier.",
+        "projects": [
+          "face-recognition"
+        ]
+      },
+      {
+        "id": "b",
+        "label": "Machine learning",
+        "title": "Asteroid and attrition",
+        "text": "Asteroid: grouped leakage-safe train/test separation, SMOTE on training data only, RandomizedSearchCV, feature importance and permutation importance. Attrition: SMOTE, GridSearchCV, log transformation, and both a classification task and a MonthlyIncome regression task.",
+        "projects": [
+          "asteroid",
+          "attrition"
+        ]
+      },
+      {
+        "id": "c",
+        "label": "Full-stack",
+        "title": "Full-stack applications",
+        "text": "React with Node.js, Express and MongoDB/Mongoose in both apps. Symbio-NLM adds Google, Microsoft and GitHub OAuth. Space Atlas adds JWT authentication, an admin panel with CRUD, validation, rate limiting, Helmet, Mongo sanitization and CORS.",
+        "projects": [
+          "symbio-nlm",
+          "space-atlas"
+        ]
+      },
+      {
+        "id": "d",
+        "label": "AI features",
+        "title": "AI features",
+        "text": "Symbio-NLM has AI sequence summaries and an AI chatbot. Memory of a City has an AI Change Story that distinguishes Data Observation, AI Interpretation and Supporting Evidence; its historical metrics are demo data.",
+        "projects": [
+          "symbio-nlm",
+          "memory-of-a-city"
+        ]
+      }
+    ]
+  },
+  "skills": [
+    {
+      "group": "Computer vision & deep learning",
+      "items": [
+        {
+          "name": "OpenCV",
+          "projects": [
+            "face-recognition"
+          ]
+        },
+        {
+          "name": "TensorFlow/Keras",
+          "projects": [
+            "face-recognition"
+          ]
+        },
+        {
+          "name": "PCA / eigenfaces",
+          "projects": [
+            "face-recognition"
+          ],
+          "terms": [
+            "eigenfaces",
+            "PCA"
+          ]
+        },
+        {
+          "name": "ANN with dropout",
+          "projects": [
+            "face-recognition"
+          ],
+          "terms": [
+            "Dropout"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Data science tooling",
+      "items": [
+        {
+          "name": "Python",
+          "projects": [
+            "face-recognition"
+          ]
+        },
+        {
+          "name": "NumPy",
+          "projects": [
+            "face-recognition"
+          ]
+        },
+        {
+          "name": "Scikit-learn",
+          "projects": [
+            "face-recognition"
+          ]
+        },
+        {
+          "name": "Matplotlib",
+          "projects": [
+            "face-recognition"
+          ]
+        },
+        {
+          "name": "Seaborn",
+          "projects": [
+            "face-recognition"
+          ]
+        },
+        {
+          "name": "Joblib",
+          "projects": [
+            "asteroid"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Modelling & evaluation",
+      "items": [
+        {
+          "name": "SMOTE",
+          "projects": [
+            "asteroid",
+            "attrition"
+          ]
+        },
+        {
+          "name": "Leakage-safe grouped splitting",
+          "projects": [
+            "asteroid"
+          ],
+          "terms": [
+            "leakage-safe grouped train/test separation"
+          ]
+        },
+        {
+          "name": "RandomizedSearchCV",
+          "projects": [
+            "asteroid"
+          ]
+        },
+        {
+          "name": "GridSearchCV",
+          "projects": [
+            "attrition"
+          ]
+        },
+        {
+          "name": "Feature engineering",
+          "projects": [
+            "asteroid",
+            "attrition"
+          ]
+        },
+        {
+          "name": "Permutation importance",
+          "projects": [
+            "asteroid"
+          ]
+        },
+        {
+          "name": "Log transformation",
+          "projects": [
+            "attrition"
+          ]
+        },
+        {
+          "name": "Confusion matrix",
+          "projects": [
+            "face-recognition"
+          ]
+        },
+        {
+          "name": "F1",
+          "projects": [
+            "asteroid",
+            "attrition"
+          ]
+        },
+        {
+          "name": "ROC-AUC",
+          "projects": [
+            "asteroid"
+          ]
+        },
+        {
+          "name": "AUC",
+          "projects": [
+            "attrition"
+          ]
+        },
+        {
+          "name": "RMSE / R²",
+          "projects": [
+            "attrition"
+          ],
+          "terms": [
+            "RMSE",
+            "R²"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Frontend",
+      "items": [
+        {
+          "name": "React",
+          "projects": [
+            "symbio-nlm",
+            "space-atlas"
+          ]
+        },
+        {
+          "name": "React Router",
+          "projects": [
+            "space-atlas"
+          ]
+        },
+        {
+          "name": "Vite",
+          "projects": [
+            "space-atlas"
+          ]
+        },
+        {
+          "name": "Tailwind",
+          "projects": [
+            "symbio-nlm"
+          ]
+        },
+        {
+          "name": "Recharts",
+          "projects": [
+            "symbio-nlm"
+          ]
+        },
+        {
+          "name": "GSAP",
+          "projects": [
+            "symbio-nlm"
+          ]
+        },
+        {
+          "name": "Axios",
+          "projects": [
+            "space-atlas"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Backend & data",
+      "items": [
+        {
+          "name": "Node.js",
+          "projects": [
+            "symbio-nlm",
+            "space-atlas"
+          ]
+        },
+        {
+          "name": "Express",
+          "projects": [
+            "symbio-nlm",
+            "space-atlas"
+          ]
+        },
+        {
+          "name": "MongoDB/Mongoose",
+          "projects": [
+            "symbio-nlm",
+            "space-atlas"
+          ]
+        },
+        {
+          "name": "PDF generation",
+          "projects": [
+            "symbio-nlm"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Auth & API security",
+      "items": [
+        {
+          "name": "JWT",
+          "projects": [
+            "space-atlas"
+          ]
+        },
+        {
+          "name": "Passport/OAuth",
+          "projects": [
+            "symbio-nlm"
+          ]
+        },
+        {
+          "name": "Helmet",
+          "projects": [
+            "space-atlas"
+          ]
+        },
+        {
+          "name": "Rate limiting",
+          "projects": [
+            "space-atlas"
+          ]
+        },
+        {
+          "name": "Mongo sanitization",
+          "projects": [
+            "space-atlas"
+          ]
+        },
+        {
+          "name": "CORS",
+          "projects": [
+            "space-atlas"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Geography data",
+      "items": [
+        {
+          "name": "OpenStreetMap",
+          "projects": [
+            "memory-of-a-city"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "AI-integrated features",
+      "items": [
+        {
+          "name": "AI sequence summaries",
+          "projects": [
+            "symbio-nlm"
+          ]
+        },
+        {
+          "name": "AI chatbot",
+          "projects": [
+            "symbio-nlm"
+          ]
+        },
+        {
+          "name": "AI Change Story",
+          "projects": [
+            "memory-of-a-city"
+          ]
+        }
+      ]
+    }
+  ],
+  "unknowns": [
+    "Employers, internships, jobs or any work history",
+    "Dates or a chronology of the projects",
+    "University name, GPA, grades or salary",
+    "Certifications, awards, publications or hackathons",
+    "Any performance numbers (accuracy, F1, ROC-AUC, RMSE, R² and so on) for any project",
+    "The names of the 9 classification algorithms in the asteroid project",
+    "The names of the classification and regression algorithms in the attrition project",
+    "Which AI provider or model Symbio-NLM and Memory of a City use",
+    "The technology stack of Memory of a City",
+    "Row counts of the IBM HR Attrition dataset",
+    "Deployment URLs for any project",
+    "Repository links for the Face Recognition and Hazardous Asteroid Prediction projects",
+    "Rachana's phone number and personal GitHub profile",
+    "Personal interests, opinions, location, pronouns, or biography beyond being a Year 3 student",
+    "Programming language, libraries or frameworks for any project other than those listed under that project",
+    "Train/test split ratios for the asteroid and attrition projects",
+    "Hyperparameters, search spaces, number of epochs, the value of k, and the confidence-threshold value",
+    "What the log transformation in the attrition project was applied to",
+    "Where SMOTE was applied in the attrition project",
+    "Number of features or engineered features beyond those named",
+    "Whether any project was solo or team work, Rachana's role, whether it was coursework or personal, and how long it took"
+  ],
+  "twin": {
+    "intro": "Ask about my projects, techniques and stack.",
+    "suggestedQuestions": [
+      "What projects has Rachana built?",
+      "Explain the asteroid project.",
+      "What ML techniques has she used?",
+      "Explain the face recognition pipeline.",
+      "What full-stack projects has she built?",
+      "Which projects use authentication?",
+      "How did she handle class imbalance?",
+      "Where has Rachana worked?"
+    ]
+  },
+  "contact": {
+    "email": "rachana00526@gmail.com",
+    "github": null,
+    "linkedin": "https://www.linkedin.com/in/rachana-s-21b931331/"
+  }
+}
